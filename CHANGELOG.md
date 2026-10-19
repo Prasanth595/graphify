@@ -2,6 +2,12 @@
 
 Full release notes with details on each version: [GitHub Releases](https://github.com/Graphify-Labs/graphify/releases)
 
+## Unreleased
+
+- Fix: the git post-commit hook and skill interpreter probes now strip a shebang argument before using it as a path, parse `/usr/bin/env [-S] /absolute/python [args]` launchers, and reject relative paths and PATH-controlled env interpreter names before verification. A pipx launcher (`#!/.../python -E`) now resolves instead of silently falling back to a `python3` without graphify and printing "could not locate a Python with graphify installed" after every commit (#2629, thanks @hpstr5000).
+
+Shebang probes accept absolute interpreter paths with optional interpreter arguments. Extra `env` options or assignments are outside this parser; they fall through to the existing interpreter probes instead of being executed.
+
 ## 0.9.92 (2026-10-16)
 
 Twenty-three community pull requests: call-resolution and id-collision fixes across JS/TS, Python, Go, Rust and Solidity; graph round-trip, dedup and confidence-folding fixes; skill code-only-update and dispatch fixes; and LLM/Ollama and detection fixes. The AST cache schema is bumped, so the first build after upgrading re-extracts.
